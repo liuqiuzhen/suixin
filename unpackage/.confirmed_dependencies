@@ -1,0 +1,30 @@
+{
+	"html/liebiao.html": {
+		"resources": [
+			"icons/iconfont.woff",
+			"css/common.css",
+			"img/number.png",
+			"img/load.gif",
+			"js/iscroll.js",
+			"icons/iconfont.css",
+			"js/touch.min.js",
+			"js/swiper-3.3.1.jquery.min.js",
+			"js/zepto.js"
+		]
+	},
+	"index.html": {
+		"resources": [
+			"html/liebiao.html"
+		],
+		"refer": [
+			"html/liebiao.html"
+		]
+	},
+	"html/car.html": {
+		"resources": [
+			"js/common.js",
+			"js/swiper-3.3.1.min.js",
+			"css/swiper-3.3.1.min.css"
+		]
+	}
+}

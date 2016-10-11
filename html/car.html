@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>购物车</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width,minimum-scale=0.5,maximum-scale=1.0,initial-scale=1.0,user-scalable=no" />
+	<link rel="stylesheet" type="text/css" href="../css/swiper-3.3.1.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+	<link rel="stylesheet" href="../icons/iconfont.css">
+	<style>
+	li{list-style: none;}
+	header{height: 178px;width:640px;padding:0;}
+	.zshu{height: 90px;background: #747474;margin-top: 88px;}
+	header span:nth-child(1){margin-left:248px;float: left;font-size: 34px;display: block;}
+	.zshu p{font-size: 30px;color: #fff;float: left;padding-right: 20px;height: 90px;line-height: 90px;}	
+	.zshu .numb{color: #fff;padding:0 10px;font-style: normal;}
+
+	.allCount{color: #aa191c;font-size: 32px;font-style: normal;padding:2px 10px;display: block;float: right;}
+	.iconfont{font-family:"iconfont";font-style:normal;}
+	.account{ width:105px;height:56px ; background:#c10e0a;float: right;margin: 16px 0px 0 0;
+			position: absolute;right: 10px;border-radius: 20px;color: #fff;font-size: 30px;border:0;outline:none;}
+	
+	p{font-size: 40px;color: #333;height: 44px;line-height: 40px;}
+	section{width: 640px}
+	section li{width:590px;padding:28px 25px;height:180px;border-bottom:2px solid #aaaaaa; }
+	
+	.car a img{width:172px;height: 172px;border:1px solid #bababa;float: left;margin-right:26px;}
+	.xinxi{float: left;}
+	.car p{width:300px;font-size: 24px;white-space: nowrap;overflow: hidden;text-overflow:ellipsis;}
+	.car input{border: 0;border-radius: 10px;font-size: 30px;margin:0 4px;}
+	.reduce,.create{width:56px;height:40px;background: #848484;color: #fff;}
+	.car .geshu{width:50px;height: 40px;color:#000;text-align: center;}
+	.delete .iconfont{color: #000;font-size: 50px;padding-left: 20px;}
+	
+	footer li:nth-child(3){position: relative;}
+	footer .numb{position: absolute;
+    width: 30px;font-size: 24px;border-radius: 50%;color: #fff;
+    height: 30px;
+    background: red;
+    display: block;
+    top: -10px;
+    left: 84px;}
+	</style>
+</head>
+<body>
+	<div class="out">
+		<header>
+			<!-- <span class="back">《《《</span> -->
+			<span>购物车</span>
+			<button class="account">结算</button>
+			<div class="zshu">
+				<p>商品数量：<i class='numb'>1</i></p>
+				<p>应付总额(不含运费):<i class='allCount'>￥399</i></p>
+			</div>			
+		</header>
+		<section>
+			<div class="load">
+					
+			</div>
+			<ul class="car">
+				<!-- <li>
+					<a href="#"><img src="../img/s01.png"></a>
+					<div class="xinxi">
+						<p>你说 觉得好久发的</p>
+						<p class="leibie">T恤</p>
+						<p class="price">单价<span>￥199</span></p>
+						<p>数量：<sapn>
+						<input type="button" name="" value="-" class="reduce">
+						<input type="text" name="" value="1" class="geshu">
+						<input type="button" name="" value="+" class="add">
+						</sapn></p>
+					</div>
+					<span class="delete">
+						<i class='iconfont'>&#xe68d;</i>
+					</span>
+				</li> -->
+			</ul>
+		</section>
+		<footer>
+			<li><a href="#"><i class="iconfont">&#xe644;</i><span>首页</span></a></li>
+			<li><a href="liebiao.html"><i class="iconfont">&#xe692;</i><span>分类</a></li>
+			<li class="hot"><a href="car.html"><i class="iconfont">&#xe61b;</i><span>购物车</span></a>
+				<span class='numb'></span>
+			</li>
+			<li><a href="#"><i class="iconfont">&#xe646;</i><span>我的秀</span></a></li>
+			<li><a href="#"><i class="iconfont">&#xe695;</i><span>更多</span></a></li>
+		</footer>
+	</div>
+</body>
+<script src="../js/zepto.js"/></script>
+<script src="../js/iscroll.js"/></script>
+<script src="../js/touch.min.js"/></script>
+<script src="../js/swiper-3.3.1.min.js"/></script>
+<script src="../js/common.js"></script>
+<script>
+	var oId = window.location.href.split("=")[1];
+	var username = localStorage.getItem("userID");
+	$.ajax({
+		type:"get",
+		url:"http://datainfo.duapp.com/shopdata/getCar.php",
+		dataType:"jsonp",
+		jsonp:"callback",
+		async:"true",
+		data:{
+			userID:username
+		},
+		beforeSend:function(){
+    		$(".load").show();
+	    },
+	    complete:function(){
+	        $(".load").hide();
+	    },
+		success:function(data){
+			// console.log(data);
+			var newShop = "";
+			for(var k =0;k<data.length;k++){
+				newShop += '<li><a href="#"><img src="'+data[k][3]+'"></a>'+
+					'<div class="xinxi">'+
+						'<p>'+data[k][2]+'</p>'+
+						'<p class="leibie">'+data[k][7]+'</p>'+
+						'<p class="price">单价:<span>￥'+data[k][4]+'</span></p>'+
+						'<p>数量：<sapn>'+
+						'<input type="button" name="" value="-" class="reduce">'+
+						'<input type="text" name="" value="'+data[k][6]+'" class="geshu">'+
+						'<input type="button" name="" value="+" class="add">'+
+						'</sapn></p></div><span class="delete" id='+data[k][0]+'>'+
+						'<i class="iconfont">&#xe68d;</i></span></li>';
+			}
+			$(".car").html(newShop);
+		},
+		error:function(str){
+			alert("发生错误" + str);
+		}
+	});
+</script>
+</html>

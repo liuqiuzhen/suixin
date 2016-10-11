@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>登录</title>
+	<meta name="viewport" content="width=device-width,minimum-scale=0.5,maximum-scale=1.0,initial-scale=1.0,user-scalable=no" />
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+	<style type="text/css">
+		section{margin-top: 20px;}
+		.regs{width: 580px;height: 340px;margin: 0 auto;}
+		.regs label{display:block;width: 580;height: 86px;color: #000;
+			line-height: 86px;font-size: 26px;margin-bottom: 30px;}
+		.regs input{width: 570px;height: 86px;border:0;outline: none;padding-left: 10px;font-size: 20px;}
+		
+		.regs li:nth-child(3){padding-top: 10px;}
+		.regs li:nth-child(3) input{width: 40px;height: 36px;border:1px solid #000;background:transparent;}
+		.regs li:nth-child(3) span{color: #5c5c5c;padding:0 6px;}
+		
+		.regs li:nth-child(4) input{width: 40px;height: 36px;border:1px solid #000;background:transparent;margin-top: 10px;}
+		.regs li:nth-child(4) span{color: #5c5c5c;padding:0 6px;}
+		.regs li:nth-child(3) label{margin-bottom: 0px}
+
+		.regs li:nth-child(3) a{color: #ff0f56;padding-left: 10px;}
+		.login{width: 580px;margin:0 auto;background-color: #cc0809;color: #fff;height: 90px;border: 1px solid #840000;font-size: 34px;
+			margin-top: 170px;display: block;text-align: center;line-height: 90px;}
+		.zhuce{margin:0 auto;width: 576px;background-color: #3b3b3b;color: #fff;height: 90px;border: 1px solid #840000;font-size: 34px;display: block;text-align: center;line-height: 90px;margin-top: 20px}
+		/*.passw{float: left;}*/
+	</style>
+</head>
+<body>
+	<div class="out">
+		<header>
+			<span class="back">《《</span>
+			<span>用户登录</span>
+		</header>
+		<section>
+			<form method="" action="">
+				<ul class="regs">
+					<li>
+						<label for=""><input type="text" name="" placeholder="请输入账户" id="username"></label>	
+					</li>
+					<li>
+						<label for=""><input type="password" name="" placeholder="请输入密码" id="password"></label>
+					</li>
+					<li>
+						<label for="" class="passw"><input type="checkBox" name="" class="check"><span>显示密码</span><a href="/">忘记密码？</a></label>
+					</li>
+					<li>
+						<label for=""><input type="checkBox" name="" checked><span>记住密码自动登录</span></label>
+					</li>
+				</ul>
+			</form>
+			<button class="login">登录</button>
+			<a class="zhuce" href="register.html">注册</a>
+		</section>
+	</div>	
+</body>
+<script src="../js/zepto.js"/></script>
+<script src="../js/swiper-3.3.1.jquery.min.js"/></script>
+<script src="../js/iscroll.js"/></script>
+<script src="../js/touch.min.js"/></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript">
+	var a = 1; //密码
+	$(".passw").on("touchend",function(){
+		// var check = $(this).find(".check");
+		if(a == 0){
+			$("#password").attr("type","password");
+			a = 1;
+		}else{
+			$("#password").attr("type","text");
+			a = 0;
+		}
+	});
+	var username = localStorage.getItem("userID");
+	var pass = localStorage.getItem("pass");
+	$("#username").attr("value",username);
+	$("#password").attr("value",pass);
+	$(".login").on("touchend",function(){
+		
+		$.ajax({
+			type:"GET",
+			url:"http://datainfo.duapp.com/shopdata/userinfo.php",
+			data:{
+				status:'login',
+				userID:$("#username").val(),
+				password:$("#password").val()
+			},
+			dataType:"text",
+			jsonp:"callback",
+			async:"true",
+			success:function(str){
+				console.log(str);
+				var str = JSON.parse(str);
+				localStorage.setItem('userID',str.userID);
+				window.open("prize.html");
+			},
+			error:function(str){
+				alert("发生错误" + str);
+			}
+		});
+
+	})
+</script>
+</html>
+
+
+<!-- {0":"36391","code":"36391","1":"qiuqiuqiu","userID":"qiuqiuqiu","2":"e10adc3949ba59abbe56e057f20f883e","password":"e10adc3949ba59abbe56e057f20f883e","3":"http:\/\/datainfo.duapp.com\/shopdata\/userimgs\/userimg.jpg","userimg_url":"http:\/\/datainfo.duapp.com\/shopdata\/userimgs\/userimg.jpg","4":null,"sex":null,"5":null,"imgname":null} -->

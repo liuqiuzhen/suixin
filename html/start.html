@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/animate.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/swiper-3.3.1.min.css"/>
+		<style type="text/css">
+			html,body,h1,h2,h3{margin: 0;padding: 0;}
+			html,body{width: 100%;height: 100%;overflow: hidden;font-family: "微软雅黑";}
+			img{width:640px;height: 100%;}
+			.tiaoguo{position: fixed;display: block;width: 100px;height: 50px;right: 60px;top: 60px;border:1px solid #fff;text-align: center;
+			z-index: 99;}
+			.tiaoguo a{text-decoration: none;display: block;line-height: 50px;color: #fff;font-size: 26px;}
+			.aa{width: 640px;height:100% ;overflow: hidden;}
+			.aa{width:640px;height: 100%;}
+			.aa1{height: 100%;}
+			.bb{width: 640px;height: 100%;}
+			.bb1-pic{position: absolute;}
+			.font{position: absolute;z-index: 88;font-size: 46px;color: #8a2828;width: 40px;height: 200px;
+			text-shadow: -1px -1px 4px #e15050;}
+			.font1{left: 242px;top: 178px;}
+			.font2{left: 367px;top: 310px;}
+			.font3{font-size:34px;color: #f6ed86;left: 220px;bottom: 100px;position: absolute;}
+			.logo{position: absolute;z-index: 88; bottom: 281px;left: 243px;/*box-shadow: 2px 2px 10px 4px #3f86a6;*/}
+			
+			.bb2 .font3 ,.bb3 .font3{left: 60px;}
+		</style>
+	</head>
+	<body>
+		<span class="tiaoguo"><a href="index.html">跳过</a></span>
+		<div class="swiper-container aa"> 
+			<div class="swiper-wrapper aa1">
+				<div class="swiper-slide bb bb1">
+					
+					<div class="bb1-pic">
+						<img src="../img/2.png" class="ani" swiper-animate-effect="bounceIn" swiper-animate-duration ="3s" swiper-animate-delay="0s"/>
+					</div>
+					
+				</div>
+				<div class="swiper-slide bb bb2">
+					<div class="bb1-pic">
+						<img src="../img/3.png" class="ani" swiper-animate-effect="fadeIn" swiper-animate-duration ="3s" swiper-animate-delay="0s"/>
+					</div>
+				</div>
+				<div class="swiper-slide bb bb3">
+					<div class="bb1-pic">
+						<img src="../img/4.png" class="ani" swiper-animate-effect="fadeIn" swiper-animate-duration ="3s" swiper-animate-delay="0s"/>
+					</div>
+				</div>
+				<div class="swiper-slide bb bb4">
+					<div class="bb1-pic">
+						<img src="../img/5.png" class="ani" swiper-animate-effect="fadeIn" swiper-animate-duration ="3s" swiper-animate-delay="0s"/>
+					</div>
+				</div>
+				<div class="swiper-slide bb bb5">
+					<div class="bb1-pic">
+						<img src="../img/6.png" class="ani" swiper-animate-effect="fadeIn" swiper-animate-duration ="3s" swiper-animate-delay="0s"/>
+					</div>
+				</div>
+			</div>
+			<div class="swiper-pagination"></div>
+		</div>
+	</body>
+
+	<script src="../js/swiper-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/swiper.animate1.0.2.min.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script type="text/javascript">
+		function bodyScale(){
+			var devicewidth=document.documentElement.clientWidth;
+			var scale=devicewidth/640;
+			document.body.style.zoom=scale;
+		}
+		window.onload=window.onresize=function(){
+			bodyScale();	
+			var mySwiper = new Swiper ('.swiper-container', { 
+				direction: 'horizontal',
+				effect : 'fade', 
+				pagination: '.swiper-pagination',
+				autoplay:4000,
+				speed:30,
+				onInit: function(swiper){
+					swiperAnimateCache(swiper); 		
+					swiperAnimate(swiper); //初始化完成开始动画
+				},
+		
+				onSlideChangeEnd:function(swiper){
+					swiperAnimate(swiper); //每个slide切换结束时也运行当前slide动画
+				 	if(swiper.activeIndex == 2){
+				 		setTimeout(function(){
+				 			window.open("index.html");
+				 		},4000);
+				 	}
+				},
+			})
+		};
+	</script>
+</html>

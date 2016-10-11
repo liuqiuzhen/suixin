@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>商品详情</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<link rel="stylesheet" type="text/css" href="../css/swiper-3.3.1.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+	<link rel="stylesheet" href="../icons/iconfont.css">
+	<style>
+	li{list-style: none;}
+		header span:nth-child(2){margin-left:148px;float: left;font-size: 34px;display: block;}
+		.iconfont{font-family:"iconfont";font-style:normal;}
+		.car{ width:105px;height:56px ; background:url(../img/number.png) no-repeat;float: right;margin: 16px 0px 0 0;
+			position: absolute;right: 10px}
+		.numb{width: 40px;height:40px;position: absolute;color: #fff;right: -6px;top:-30px;font-size: 26px}
+		p{font-size: 40px;color: #333;height: 60px;line-height: 60px;}
+	</style>
+</head>
+<body>
+	<div class="out">
+		<header>
+			<span class="back">《《《</span>
+			<span>商品资料</span>
+			<span class="car"><div class="numb">1</div></span>			
+		</header>
+		<section>
+			
+			<div class="ret">
+				
+			</div>
+		</section>
+		<!-- <footer>
+			
+		</footer> -->
+	</div>
+</body>
+<script src="../js/zepto.js"/></script>
+<script src="../js/iscroll.js"/></script>
+<script src="../js/touch.min.js"/></script>
+<script src="../js/swiper-3.3.1.min.js"/></script>
+<script src="../js/common.js"></script>
+<script>
+	var oId = window.location.href.split("=")[1];
+	$.ajax({
+			type:"get",
+			url:"http://datainfo.duapp.com/shopdata/getGoods.php",
+			dataType:"jsonp",
+			jsonp:"callback",
+			async:"true",
+			beforeSend:function(){
+       		//这里是开始执行方法，显示效果，效果自己写
+        		$(".load").show();
+		    },
+		    complete:function(){
+		        //方法执行完毕，效果自己可以关闭，或者隐藏效果
+		        $(".load").hide();
+		    },
+			success:function(data){
+				var newE = "";
+				var nreRetail = "";
+
+				for(var j = 0;j<data.length;j++){
+					if(data[j][0] == oId){
+						// data[6] 商品图片
+						var dataImg = data[j][6];
+						var arrImg = JSON.parse(dataImg)
+						for(var i =0;i<arrImg.length;i++){
+							
+							newE+='<div class="swiper-slide aa"><img src="'+arrImg[i]+'"/></div>';
+							
+						}
+						newE+="<p class='xjie'>"+data[j][2]+"</p><p class='price'><span class='nPrice'></span><span class='yPrice'></span></p><p class='xiaoshou'>购买人数：<span class='num'>347</span></p>"
+
+						// $(".ban").html(newE);
+					}
+				}
+				$(".ret").html(newE);				
+			},
+			error:function(str){
+				alert("发生错误" + str);
+			}
+		});
+</script>
+</html>

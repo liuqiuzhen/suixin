@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>注册</title>
+	<meta name="viewport" content="width=device-width,minimum-scale=0.5,maximum-scale=1.0,initial-scale=1.0,user-scalable=no" />
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+	<style type="text/css">
+		section{margin-top: 20px;}
+		.regs{width: 580px;height: 340px;margin: 0 auto;}
+		.regs label{display:block;width: 570;height: 86px;background-color: #fff;color: #000;
+			margin-bottom: 30px;line-height: 86px;font-size: 26px;padding-left: 10px}
+		.regs input{width: 436px;border:0;outline: none;font-size: 20px}
+		
+		.sure{width: 580px;background-color: #cc0809;color: #fff;height: 90px;border: 1px solid #840000;font-size: 34px;margin-top:170px;margin-left: 20px}
+	</style>
+</head>
+<body>
+	<div class="out">
+		<header>
+			<span class="back">《《</span>
+			<span>用户注册</span>
+		</header>
+		<section>
+			<!-- <form method="post" action=" "> -->
+				<ul class="regs">
+					<li>
+						<label for="">账户名称：<input type="text" name="" placeholder="请输入账户" id="name"></label>	
+					</li>
+					<li>
+						<label for="">登录密码：<input type="password" name="" placeholder="请输入密码" id="password"></label>
+					</li>
+					<li>
+						<label for="">确认密码：<input type="password" name="" placeholder="请输入密码" id="repassword"></label>
+					</li>
+				</ul>
+				<button class="sure">确定注册</button>
+			<!-- </form> -->
+		</section>
+		
+	</div>
+	
+</body>
+<script src="../js/zepto.js"/></script>
+<script src="../js/swiper-3.3.1.jquery.min.js"/></script>
+<script src="../js/iscroll.js"/></script>
+<script src="../js/touch.min.js"/></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript">
+	//点击注册		http://datainfo.duapp.com/shopdata/userinfo.php
+
+	$(".sure").on("touchend",function(){
+		if($("#password").val() == $("#repassword").val()){
+			$.ajax({
+				type:"post",
+				url:"http://datainfo.duapp.com/shopdata/userinfo.php",
+				data: {
+					status:"register",
+					userID: $("#name").val(), 
+					password: $("#password").val()
+				},
+				dataType:"text",
+				success:function(data){	
+					 console.log(data);
+					if(data == 0){
+						alert("用户名重名");
+					}else{
+
+						localStorage.setItem("userID",$("#name").val());
+						localStorage.setItem("pass",$("#password").val());
+				 		window.open("login.html")
+					}
+					
+				},
+				error:function(err){
+					alert("错误"+err);
+				}
+			});
+		}else{
+			alert("密码不一致");
+		}
+
+		
+	})
+
+</script>
+</html>

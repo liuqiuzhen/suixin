@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+body,html,dl,dt,dd,li,ul,p,h2,h1,h3,h4,a{margin:0;padding:0;}
+body,html{width: 100%;height: 100%;background: #f1f0ee;font-family: "微软雅黑";overflow: hidden;}
+
+.out{width: 640px;height: 100%;overflow: hidden;display:-webkit-box;-webkit-box-orient:vertical;}
+header{width: 620px;height: 88px;background: #a90506;padding:0 10px;margin-bottom: 14px;}
+
+header span{display:block;line-height: 88px;color: #fff;font-size: 30px;float: left;}
+header span:nth-child(2){margin-left: 180px}
+header span:nth-child(3){float: right;border:1px solid #a80506;line-height: 84px;}
+
+
+section{width: 610px;-webkit-box-flex:1;overflow: hidden;margin:0 auto; }
+
+.zhuanpan{width: 100%;height: 478px;background-color: #a90506;/*padding-top: 190px;*/ }
+/*.start{width: 200px;height:186px;background:#640000;color: #fff;font-size: 46px;margin:0 0 0 205px; text-align: center;
+	line-height:186px;}*/
+
+
+.result{width: 548px;min-height: 200px;height: auot !import;height: 400px;background: #ff4948;border:2px solid #a80506;
+padding:0 28px;margin-top: 14px; overflow: auto;}

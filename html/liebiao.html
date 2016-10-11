@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>列表页</title>
+	<meta name="viewport" content="width=device-width,minimum-scale=0.5,maximum-scale=1.0,initial-scale=1.0,user-scalable=no" />
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+	<link rel="stylesheet" href="../icons/iconfont.css">
+	<style type="text/css">
+		header{height: 146px;padding:0;width:640px;}
+		header span:nth-child(1){margin-left:248px;float: left;font-size: 34px;display: block;}
+		.iconfont{font-family:"iconfont";font-style:normal;font-size: 34px;}
+		.car{ width:105px;height:56px ; background:url(../img/number.png) no-repeat;float: right;margin: 16px 0px 0 0;position: absolute;right: 10px}
+		.numb{width: 40px;height:40px;position: absolute;color: #fff;right: -6px;top:-30px;font-size: 26px}
+		
+		#nav{width:640px;height: 58px;background: #9a9fa5;overflow-x:auto; font-size: 38px;text-align: center;color: #000;}
+		#scrollerActivity{width:1100px;height: 58px;overflow: auto;left:0px;}
+		.nav li{float: left;width:80px;height: 58px;line-height: 58px;position: relative;font-size: 34px;}
+		#nav::-webkit-scrollbar{width:0;height:0}
+		
+		#scrollerActivity b{border: 10px solid #fff;border-color: transparent;border-bottom-color: #fff;display: block;position: absolute;left:32px;top: 41px;display: block;display: none;}
+		.nav li:hover{color: #fff;font-size: 34px}
+		.nav li:hover b{display: block;}
+		
+		/*商品*/
+		.shop dl{width:258px;height: 360px;float: left;margin:30px 32px 0 30px;}
+		.shop dt{width:246px;height: 246px;border:1px solid #c7c7c9;box-shadow: 1px 1px 4px #ccc;}
+		.shop dt img{width: 246px;height: 246px;}
+		.shop dd p{text-align: center;margin:10px 10px; white-space:nowrap; overflow: hidden;text-overflow:ellipsis;}
+		.nPrice{float: left;color: #d41012;font-size: 30px;}
+		.yPrice{float: right;color: #88888a;/*text-decoration: line-through;*/font-size: 28px;}
+		
+	</style>
+</head>
+<body>
+	<div class="out">
+		<header>
+			<!-- <span class="back">《《《</span> -->
+			<span>新品上市</span>
+			<span class="car"><a href="car.html"><div class="numb">1</div></a></span>	
+			<div id="nav" class="nav">
+				<div id="scrollerActivity" class="scrollerActivity">
+					<ul id="thelist">
+						
+					</ul>	
+				</div>
+			</div>	
+		</header>
+		<section>
+			<div class="shop">
+				<div class="load">
+					
+				</div>
+			</div>
+		</section>
+		<footer>
+			<ul>
+				<li><a href="#"><i class="iconfont">&#xe644;</i><span>首页</span></a></li>
+				<li class="hot"><a href="liebiao.html"><i class="iconfont">&#xe692;</i><span>分类</a></li>
+				<li><a href="car.html"><i class="iconfont">&#xe61b;</i><span>购物车</span></a></li>
+				<li><a href="#"><i class="iconfont">&#xe646;</i><span>我的秀</span></a></li>
+				<li><a href="#"><i class="iconfont">&#xe695;</i><span>更多</span></a></li>
+			</ul>
+		</footer>
+	</div>
+</body>
+
+<script src="../js/zepto.js"/></script>
+<script src="../js/swiper-3.3.1.jquery.min.js"/></script>
+<script src="../js/iscroll.js"/></script>
+<script src="../js/touch.min.js"/></script>
+<!-- <script type="text/javascript" src="../js/common.js"></script> -->
+
+<script>
+function bodyScale(){
+	var devicewidth=document.documentElement.clientWidth;
+	var scale=devicewidth/640;
+	document.body.style.zoom=scale;
+}
+window.onload=window.onresize=function(){
+	bodyScale();	
+	$(function(){
+  //       var homeScroll = new iScroll("nav", {  
+		//     snap : true,  
+		//     momentum : false,  
+		//     hScrollbar : false,  
+		//     vScrollbar : false,  
+		//     checkDOMChanges : true,  
+		//     onScrollEnd : function() {  
+			
+		// 	}  
+		// });  
+  //   	$("#scrollerActivity").css({  
+	 //        'width' : document.body.clientWidth * 4 + 'px'  
+	 //    });  
+	 //    $('#wrapperIndexActivity ul li ').css({  
+		//     'width' : document.body.clientWidth + "px"  
+		// });  
+		// homeScroll.refresh();
+ 
+		// 导航条滚动  
+
+		// 获取商品分类
+		$.ajax({
+			type:"get",
+			url:"http://datainfo.duapp.com/shopdata/getclass.php",
+			dataType:"json",
+			jsonp:"callback",
+			async:"true",
+			beforeSend:function(){
+       		//这里是开始执行方法，显示效果，效果自己写
+        		$(".load").show();
+		    },
+		    complete:function(){
+		        //方法执行完毕，效果自己可以关闭，或者隐藏效果
+		        $(".load").hide();
+		    },
+			success:function(data){
+				var newElement = "";
+				for(var i =0;i<data.length;i++){
+					newElement += "<li class='"+data[i][1]+"'><i class='iconfont'>"+data[i][2]+"</i><b></b></li>";
+				}	
+				$("#thelist").html(newElement);
+				insert($("#thelist li").eq(0),$("#thelist li").eq(0),0);
+
+				$("#thelist li").each(function(){
+					var index = $(this).index();
+
+					$(this).on("touchend",function(){
+						insert($(this),this,index);
+					})
+				})
+			},
+			error:function(str){
+				alert("发生错误" + str);
+			}
+		});
+
+		function insert(obj,_this,num){
+			console.log(num);
+			var newEl = "";
+			var lei = obj.attr("class");
+			for(var k =0;k<$("b").length;k++){
+				$("b").eq(k).hide();
+			}
+			obj.find("b").show();
+			
+			// 获取商品或列表
+			$.ajax({
+				type:"get",
+				url:"http://datainfo.duapp.com/shopdata/getGoods.php",
+				dataType:"jsonp",
+				jsonp:"callback",
+				async:"true",
+				data:{
+					classID:num,
+				},
+				beforeSend:function(){
+	       		//这里是开始执行方法，显示效果，效果自己写
+	        		$(".load").show();
+			    },
+			    complete:function(){
+			        //方法执行完毕，效果自己可以关闭，或者隐藏效果
+			        $(".load").hide();
+			    },
+				success:function(data){
+					for(var i= 0;i<data.length;i++){
+						// if(data[i][7] == lei ){
+							newEl += "<dl><dt class='pic'><a href='message.html?id="+data[i][0]+"'><img src='"+data[i][3]+"'></dt></a>"+
+		"<dd><p>"+data[i][2]+"</p><p><span class='nPrice'>￥"+data[i][4]+"</span><span class='yPrice'>"+data[i][5]+"</p></dd></dl>"
+						// }
+					}					
+					$(".shop").html(newEl);
+				},
+				error:function(str){
+					alert("发生错误" + str);
+				}
+			});
+		}
+	})
+}
+</script>
+</html>
